@@ -1,0 +1,12 @@
+{
+  "name": "worldjen",
+  "description": "Portable WorldJen agent skill for runner setup, SDK and CLI usage, run checks, and leaderboard retrieval.",
+  "version": "0.1.0",
+  "author": {
+    "name": "MoonMath.ai",
+    "url": "https://moonmath.ai"
+  },
+  "homepage": "https://www.worldjen.com",
+  "repository": "https://github.com/moonmath-ai/worldjen-skills",
+  "license": "MIT"
+}

@@ -1,0 +1,6 @@
+interface:
+  display_name: "WorldJen"
+  short_description: "Install and operate the WorldJen SDK, CLI, runners, run checks, and leaderboard access."
+
+policy:
+  allow_implicit_invocation: false

@@ -1,0 +1,17 @@
+{
+  "name": "worldjen",
+  "owner": {
+    "name": "MoonMath.ai",
+    "url": "https://moonmath.ai"
+  },
+  "plugins": [
+    {
+      "name": "worldjen",
+      "source": {
+        "source": "github",
+        "repo": "moonmath-ai/worldjen-skills"
+      },
+      "description": "WorldJen skill for SDK and CLI setup, runner operations, run checks, and leaderboard retrieval."
+    }
+  ]
+}

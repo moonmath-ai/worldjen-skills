@@ -1,0 +1,39 @@
+{
+  "name": "worldjen",
+  "version": "0.1.0",
+  "description": "Portable WorldJen agent skill for runner setup, SDK and CLI usage, run checks, and leaderboard retrieval.",
+  "author": {
+    "name": "MoonMath.ai",
+    "url": "https://moonmath.ai"
+  },
+  "homepage": "https://www.worldjen.com",
+  "repository": "https://github.com/moonmath-ai/worldjen-skills",
+  "license": "MIT",
+  "keywords": [
+    "worldjen",
+    "runner",
+    "video-generation",
+    "sdk",
+    "cli"
+  ],
+  "skills": "./skills/",
+  "interface": {
+    "displayName": "WorldJen",
+    "shortDescription": "Operate WorldJen from Codex",
+    "longDescription": "Install and operate the WorldJen SDK and CLI, manage runners, inspect runs, and retrieve leaderboard data from Codex.",
+    "developerName": "MoonMath.ai",
+    "category": "Developer Tools",
+    "capabilities": [
+      "Interactive",
+      "Write"
+    ],
+    "websiteURL": "https://www.worldjen.com",
+    "defaultPrompt": [
+      "Install the WorldJen CLI and verify it works.",
+      "List available WorldJen runners in JSON.",
+      "Check the status of a WorldJen run."
+    ],
+    "brandColor": "#8B5CF6",
+    "logo": "./assets/worldjen-logo.svg"
+  }
+}

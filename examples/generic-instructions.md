@@ -1,0 +1,1 @@
+Read `skills/worldjen/SKILL.md` before handling WorldJen tasks. Use `skills/worldjen/reference.md` only when you need examples or troubleshooting details. Stay on the public product surface, prefer machine-readable output, and do not invent IDs or undocumented endpoints.
