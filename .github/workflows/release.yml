@@ -12,7 +12,7 @@ jobs:
   release:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5  # v4.3.1
         with:
           fetch-depth: 0
 
@@ -31,7 +31,6 @@ jobs:
           fi
 
       - name: Extract release notes from CHANGELOG
-        id: notes
         run: |
           VERSION="${GITHUB_REF#refs/tags/v}"
           awk -v v="$VERSION" '
@@ -41,14 +40,14 @@ jobs:
             }
             in_section { print }
           ' CHANGELOG.md > release-notes.md
-          echo "notes<<EOF" >> "$GITHUB_OUTPUT"
-          cat release-notes.md >> "$GITHUB_OUTPUT"
-          echo "EOF" >> "$GITHUB_OUTPUT"
+          echo "--- release notes preview ---"
+          cat release-notes.md
 
       - name: Create GitHub Release
-        uses: softprops/action-gh-release@v2
-        with:
-          name: worldjen-skills ${{ github.ref_name }}
-          body: ${{ steps.notes.outputs.notes }}
-          draft: false
-          prerelease: false
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          gh release create "${GITHUB_REF_NAME}" \
+            --title "worldjen-skills ${GITHUB_REF_NAME}" \
+            --notes-file release-notes.md \
+            --verify-tag
