@@ -1,0 +1,21 @@
+{
+  "name": "worldjen",
+  "description": "WorldJen agent skills marketplace",
+  "interface": {
+    "displayName": "WorldJen"
+  },
+  "plugins": [
+    {
+      "name": "worldjen",
+      "source": {
+        "source": "local",
+        "path": "../.."
+      },
+      "policy": {
+        "installation": "AVAILABLE",
+        "authentication": "ON_INSTALL"
+      },
+      "category": "Developer Tools"
+    }
+  ]
+}

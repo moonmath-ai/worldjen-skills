@@ -4,16 +4,19 @@ Per-capability agent skills for the [WorldJen](https://www.worldjen.com) video-e
 
 ## Quick start
 
-1. **Add the marketplace, then install the plugin** (two steps in both Claude Code and Codex):
+1. **Install the plugin** (Claude Code: two-step CLI; Codex: marketplace + interactive picker, or copy directly):
 
    ```bash
-   # Claude Code
+   # Claude Code (CLI)
    claude plugin marketplace add moonmath-ai/worldjen-skills
    claude plugin install worldjen@worldjen
 
-   # Codex
+   # Codex — marketplace path (then pick "worldjen" inside the Codex TUI)
    codex plugin marketplace add moonmath-ai/worldjen-skills
-   codex plugin install worldjen
+
+   # Codex — direct skill copy (no TUI required)
+   mkdir -p ~/.codex/skills
+   cp -R skills/worldjen-* ~/.codex/skills/
    ```
 
 2. Set `WORLDJEN_API_KEY` (get one at <https://www.worldjen.com/settings/api-keys>) for any auth-needed task.
@@ -73,23 +76,24 @@ For local development without the marketplace install:
 claude --plugin-dir /path/to/worldjen-skills
 ```
 
-### Codex (plugin)
+### Codex (marketplace)
 
 ```bash
 codex plugin marketplace add moonmath-ai/worldjen-skills
-codex plugin install worldjen
 ```
 
-For local testing without the public repo, copy `examples/codex-marketplace.json` and point its plugin entry at this repo.
+This registers the marketplace. To install the plugin from it, open the Codex TUI and pick `worldjen` from the available plugins. The Codex CLI does not currently expose a non-interactive `plugin install` step.
 
-### Codex (local skill)
+For local testing without the public repo, copy `examples/codex-marketplace.json` to your own marketplace directory and point its plugin entry at this repo.
+
+### Codex (direct skill copy)
 
 ```bash
-mkdir -p ~/.agents/skills
-cp -R skills/worldjen-* ~/.agents/skills/   # all skills; or pick individual ones
+mkdir -p ~/.codex/skills
+cp -R skills/worldjen-* ~/.codex/skills/   # all skills; or pick individual ones
 ```
 
-Then `$worldjen-leaderboard ...` (or any other skill name), or let Codex pick from descriptions.
+Then restart Codex. Each skill becomes available — `$worldjen-leaderboard ...` (or any other), or let Codex pick from descriptions. Verified path; no marketplace setup required.
 
 ### Generic harness
 
