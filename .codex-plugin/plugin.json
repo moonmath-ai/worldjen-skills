@@ -1,7 +1,7 @@
 {
   "name": "worldjen",
-  "version": "0.1.0",
-  "description": "Portable WorldJen agent skill for runner setup, SDK and CLI usage, run checks, and leaderboard retrieval.",
+  "version": "0.2.0",
+  "description": "Per-capability WorldJen agent skills: install, runner, runs, leaderboard, and sandbox (Playground + Rank).",
   "author": {
     "name": "MoonMath.ai",
     "url": "https://moonmath.ai"
@@ -14,13 +14,16 @@
     "runner",
     "video-generation",
     "sdk",
-    "cli"
+    "cli",
+    "playground",
+    "rank",
+    "leaderboard"
   ],
   "skills": "./skills/",
   "interface": {
     "displayName": "WorldJen",
-    "shortDescription": "Operate WorldJen from Codex",
-    "longDescription": "Install and operate the WorldJen SDK and CLI, manage runners, inspect runs, and retrieve leaderboard data from Codex.",
+    "shortDescription": "Per-capability WorldJen skills for Codex",
+    "longDescription": "Per-capability skills for installing the WorldJen SDK and CLI, operating a runner host, creating and inspecting evaluation runs, fetching the public leaderboard, and using the Playground/Rank user-scoped sandbox.",
     "developerName": "MoonMath.ai",
     "category": "Developer Tools",
     "capabilities": [
@@ -29,9 +32,10 @@
     ],
     "websiteURL": "https://www.worldjen.com",
     "defaultPrompt": [
+      "Show me the WorldJen leaderboard.",
       "Install the WorldJen CLI and verify it works.",
-      "List available WorldJen runners in JSON.",
-      "Check the status of a WorldJen run."
+      "Check the status of a WorldJen run.",
+      "Reset my WorldJen Playground sandbox."
     ],
     "brandColor": "#8B5CF6",
     "logo": "./assets/worldjen-logo.svg"

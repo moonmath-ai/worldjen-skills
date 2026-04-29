@@ -1,7 +1,7 @@
 {
   "name": "worldjen",
-  "description": "Portable WorldJen agent skill for runner setup, SDK and CLI usage, run checks, and leaderboard retrieval.",
-  "version": "0.1.0",
+  "description": "Per-capability WorldJen agent skills: install, runner, runs, leaderboard, and sandbox (Playground + Rank).",
+  "version": "0.2.0",
   "author": {
     "name": "MoonMath.ai",
     "url": "https://moonmath.ai"
