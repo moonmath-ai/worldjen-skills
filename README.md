@@ -1,153 +1,137 @@
-# WorldJen Agent Skill
+# WorldJen Agent Skills
 
-This repo gives your coding agent a WorldJen playbook for:
-
-- installing and using the SDK or CLI
-- installing and operating a runner
-- checking run status
-- retrieving public leaderboard data
-
-The same skill can be used in Claude Code, Codex, or simpler agent harnesses.
+Per-capability agent skills for the [WorldJen](https://www.worldjen.com) video-evaluation product. Drop them into Claude Code, Codex, or any agent harness so your agent can install the SDK, operate runners, create eval runs, fetch the leaderboard, and use the Playground/Rank sandbox for you.
 
 ## Quick start
 
-Pick the install path that matches your agent:
+1. **Add the marketplace, then install the plugin** (two steps in both Claude Code and Codex):
 
-- **Claude Code:** load this repo as a plugin
-- **Codex:** install it either as a plugin or as a local skill
-- **Other agents:** point the agent at `skills/worldjen/SKILL.md`
+   ```bash
+   # Claude Code
+   claude plugin marketplace add moonmath-ai/worldjen-skills
+   claude plugin install worldjen@worldjen
 
-If you just want the core skill files, they are here:
+   # Codex
+   codex plugin marketplace add moonmath-ai/worldjen-skills
+   codex plugin install worldjen
+   ```
 
-- `skills/worldjen/SKILL.md`
-- `skills/worldjen/reference.md`
+2. Set `WORLDJEN_API_KEY` (get one at <https://www.worldjen.com/settings/api-keys>) for any auth-needed task.
+3. Ask your agent: *"Show me the WorldJen leaderboard."* The leaderboard skill is auto-invocable; no syntax to remember.
 
-## Claude Code
+## What do you want to do?
 
-Add the marketplace:
+| Goal                                                   | Skill                  | Auth |
+| ------------------------------------------------------ | ---------------------- | ---- |
+| Install the SDK and CLI                                | `worldjen-install`     | No   |
+| Set up or operate a GPU runner host (Linux + systemd)  | `worldjen-runner`      | Yes  |
+| Create and inspect evaluation runs                     | `worldjen-runs`        | Yes  |
+| Fetch the public leaderboard                           | `worldjen-leaderboard` | No   |
+| Use the Playground or Rank sandbox                     | `worldjen-sandbox`     | Yes  |
+
+`worldjen-runs` is for **evaluation jobs**. `worldjen-runner` is for the **GPU worker host**. They are different.
+
+## Invocation syntax
+
+| Platform                | Form                                              |
+| ----------------------- | ------------------------------------------------- |
+| Claude Code (plugin)    | `/worldjen:worldjen-leaderboard ...`              |
+| Claude Code (local)     | `/worldjen-leaderboard ...`                       |
+| Codex (plugin or local) | `$worldjen-leaderboard ...`                       |
+| Generic agent           | Point at `skills/worldjen-leaderboard/SKILL.md`   |
+
+All skills are auto-invocable. Type natural language and the agent picks the right skill from the description.
+
+## Examples
+
+```text
+Show me the WorldJen leaderboard.
+
+Install the WorldJen CLI in my active Python environment.
+
+Register this Linux machine as a runner with token <TOKEN>.
+
+Check WorldJen run <RUN_ID> and summarize its status.
+
+Reset my WorldJen Playground sandbox.
+
+Get my WorldJen Rank sandbox as JSON.
+```
+
+## Install paths
+
+### Claude Code
 
 ```bash
 claude plugin marketplace add moonmath-ai/worldjen-skills
+claude plugin install worldjen@worldjen
 ```
 
-Then install the `worldjen` plugin from that marketplace, or load the repo locally during development:
+For local development without the marketplace install:
 
 ```bash
-claude --plugin-dir /path/to/worldjen
+claude --plugin-dir /path/to/worldjen-skills
 ```
 
-Then invoke:
-
-```text
-/worldjen:worldjen
-```
-
-If you install it through a plugin marketplace, the same namespaced skill should be available there.
-
-Example invocations:
-
-```text
-/worldjen:worldjen Install the WorldJen CLI in my active environment and verify it works.
-
-/worldjen:worldjen Register this Linux machine as a runner with token <TOKEN> and show me the status.
-
-/worldjen:worldjen Check run <RUN_ID> and summarize its current status.
-
-/worldjen:worldjen Fetch the public WorldJen leaderboard and list the available dimensions.
-```
-
-## Codex
-
-### Option 1: install as a plugin
-
-Add the marketplace:
+### Codex (plugin)
 
 ```bash
 codex plugin marketplace add moonmath-ai/worldjen-skills
+codex plugin install worldjen
 ```
 
-Then install the `worldjen` plugin from that marketplace.
+For local testing without the public repo, copy `examples/codex-marketplace.json` and point its plugin entry at this repo.
 
-For local testing without the public repo, use `examples/codex-marketplace.json` as a starting point for your own marketplace file, then point the marketplace entry at the directory where this plugin repo lives.
-
-### Option 2: install as a local skill
-
-Copy or symlink the skill folder into your Codex user skills directory:
+### Codex (local skill)
 
 ```bash
 mkdir -p ~/.agents/skills
-cp -R /path/to/worldjen/skills/worldjen ~/.agents/skills/worldjen
+cp -R skills/worldjen-* ~/.agents/skills/   # all skills; or pick individual ones
 ```
 
-Then invoke it explicitly:
+Then `$worldjen-leaderboard ...` (or any other skill name), or let Codex pick from descriptions.
 
-```text
-$worldjen
-```
+### Generic harness
 
-Or let Codex pick it from the skill description.
+Point the agent at `skills/<skill-name>/SKILL.md`. Each skill is self-contained — no shared includes. See `examples/generic-instructions.md` for the bootstrap snippet.
 
-If you want Codex to prefer the skill inside a working repo, add the snippet from `examples/codex-AGENTS.md` to that repo's `AGENTS.md`.
+## Migration from 0.1.x
 
-Example invocations:
+The single `worldjen` umbrella skill is **deprecated in 0.2.0** and will be removed in **0.3.0**. Existing references to `/worldjen:worldjen` continue to work — they now resolve to a router that points at the per-capability skills.
 
-```text
-$worldjen Install the WorldJen CLI in my active environment and verify it works.
+| Old call                    | New call                                                   |
+| --------------------------- | ---------------------------------------------------------- |
+| Install with the umbrella   | `worldjen-install`                                         |
+| Runner setup with umbrella  | `worldjen-runner`                                          |
+| Run status with umbrella    | `worldjen-runs`                                            |
+| Leaderboard with umbrella   | `worldjen-leaderboard`                                     |
+| Sandbox usage with umbrella | `worldjen-sandbox`                                         |
 
-$worldjen Register this Linux machine as a runner with token <TOKEN> and show me the status.
+Update `AGENTS.md` files, blog posts, and pinned scripts to reference the per-capability skill names before 0.3.0.
 
-$worldjen Check run <RUN_ID> and summarize its current status.
+## Troubleshooting
 
-$worldjen Fetch the public WorldJen leaderboard and list the available dimensions.
-```
+- `worldjen: command not found` — activate the environment where `worldjen` was installed. Verify with `python -m pip show worldjen`.
+- Auth failure — set `WORLDJEN_API_KEY` (or pass `--api-key`). Get a key at <https://www.worldjen.com/settings/api-keys>.
+- Runner service commands fail on macOS — runner service management requires Linux + systemd.
+- Missing IDs — list them: `worldjen runner list --json`, `worldjen models list`, `worldjen runs list --json`.
 
-## Other agent harnesses
-
-For Gemini CLI, Hermes, PI, or similar tools:
-
-1. Give the agent `skills/worldjen/SKILL.md` as the main instruction file.
-2. Provide `skills/worldjen/reference.md` when the agent needs examples or troubleshooting notes.
-3. If the harness supports a local skills directory, install the whole `skills/worldjen/` folder there.
-
-For the simplest bootstrap, reuse the text in `examples/generic-instructions.md`.
-
-Example prompts:
-
-```text
-Use the WorldJen skill to install the CLI in my active Python environment and verify it works.
-
-Use the WorldJen skill to check run <RUN_ID> and tell me whether it is still pending, running, or finished.
-
-Use the WorldJen skill to fetch the public leaderboard and show the available dimensions.
-```
-
-## Common tasks
-
-Examples of what the skill is meant to handle:
-
-- install `worldjen` or `worldjen[runner]`
-- create or register a runner on a Linux host
-- start, stop, inspect, or tail runner logs
-- list dimensions, models, runners, and runs
-- check a specific run and inspect logs or videos
-- fetch the public leaderboard JSON
-
-## What the skill expects
-
-The skill assumes the agent can gather these values before acting:
-
-- `WORLDJEN_API_KEY` for authenticated CLI usage
-- runner name or runner ID when operating a runner
-- model ID when creating queued runs
-- run ID when checking a specific run
-- a Linux host with systemd for local runner service commands
-
-## What the skill does not do
+## What these skills do not do
 
 This repo stays on the public product surface:
 
-- public CLI commands
-- public SDK entrypoints
-- public leaderboard retrieval
+- Public CLI commands (`worldjen ...`) and SDK entrypoints (`worldjen.run(...)`)
+- Public REST API (`/api/v1/*`)
+- Public leaderboard (`/api/v1/public/leaderboard`)
 
 It avoids private repository paths, internal modules, and undocumented behavior.
+
+## Development
+
+Validate skills locally before opening a PR:
+
+```bash
+./scripts/check-skills.sh
+```
+
+Checks: plugin manifests parse, every skill has correct frontmatter and matching `agents/openai.yaml` policy, all relative markdown links resolve, destructive-ops skills include the required confirmation section.
