@@ -1,6 +1,6 @@
 {
   "name": "worldjen",
-  "description": "WorldJen agent skills marketplace",
+  "description": "Agent skills for the WorldJen AI video and world model evaluation service.",
   "interface": {
     "displayName": "WorldJen"
   },
@@ -15,7 +15,7 @@
         "installation": "AVAILABLE",
         "authentication": "ON_INSTALL"
       },
-      "category": "Developer Tools"
+      "category": "AI Evaluation"
     }
   ]
 }

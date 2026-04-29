@@ -1,6 +1,6 @@
 # WorldJen Agent Skills
 
-Per-capability agent skills for the [WorldJen](https://www.worldjen.com) video-evaluation product. Drop them into Claude Code, Codex, or any agent harness so your agent can install the SDK, operate runners, create eval runs, fetch the leaderboard, and use the Playground/Rank sandbox for you.
+Agent skills for the [WorldJen](https://www.worldjen.com) AI video and world model evaluation service. Drop them into Claude Code, Codex, or any agent harness so your agent can install the SDK, operate runners, create eval runs, fetch the leaderboard, and use the Playground/Rank sandbox for you.
 
 ## Quick start
 

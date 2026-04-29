@@ -1,7 +1,7 @@
 {
   "name": "worldjen",
   "version": "0.2.0",
-  "description": "Per-capability WorldJen agent skills: install, runner, runs, leaderboard, and sandbox (Playground + Rank).",
+  "description": "Agent skills for the WorldJen AI video and world model evaluation service: install, runner, runs, leaderboard, and sandbox (Playground + Rank).",
   "author": {
     "name": "MoonMath.ai",
     "url": "https://moonmath.ai"
@@ -22,10 +22,10 @@
   "skills": "./skills/",
   "interface": {
     "displayName": "WorldJen",
-    "shortDescription": "Per-capability WorldJen skills for Codex",
-    "longDescription": "Per-capability skills for installing the WorldJen SDK and CLI, operating a runner host, creating and inspecting evaluation runs, fetching the public leaderboard, and using the Playground/Rank user-scoped sandbox.",
+    "shortDescription": "Operate WorldJen from Codex",
+    "longDescription": "Drive the WorldJen AI video and world model evaluation service from Codex: install the SDK and CLI, set up and operate a runner host, create and inspect evaluation runs, fetch the public leaderboard, and use the Playground/Rank user-scoped sandbox.",
     "developerName": "MoonMath.ai",
-    "category": "Developer Tools",
+    "category": "AI Evaluation",
     "capabilities": [
       "Interactive",
       "Write"

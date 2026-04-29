@@ -40,10 +40,6 @@ The response is JSON with at least:
 
 The endpoint does not currently accept query filters. If the user wants to compare specific models or dimensions, fetch the full leaderboard and filter client-side (e.g. with `jq`).
 
-## Non-production environments
-
-If the user wants a non-production environment, ask for the base URL — don't guess.
-
 ## See also
 
 - `worldjen-install` — install the SDK and CLI for richer programmatic access

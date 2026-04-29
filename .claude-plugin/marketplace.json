@@ -1,6 +1,6 @@
 {
   "name": "worldjen",
-  "description": "Per-capability agent skills for the WorldJen video-evaluation product (install, runner, runs, leaderboard, sandbox).",
+  "description": "Agent skills for the WorldJen AI video and world model evaluation service.",
   "owner": {
     "name": "MoonMath.ai",
     "url": "https://moonmath.ai"
@@ -12,7 +12,7 @@
         "source": "github",
         "repo": "moonmath-ai/worldjen-skills"
       },
-      "description": "Per-capability WorldJen agent skills: install, runner, runs, leaderboard, and sandbox (Playground + Rank)."
+      "description": "Agent skills for the WorldJen AI video and world model evaluation service: install, runner, runs, leaderboard, and sandbox (Playground + Rank)."
     }
   ]
 }
