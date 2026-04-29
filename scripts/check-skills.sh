@@ -22,6 +22,7 @@ EXPECTED_SKILLS = {
     "worldjen-runs": {"deprecated": False, "destructive": True},
     "worldjen-leaderboard": {"deprecated": False, "destructive": False},
     "worldjen-sandbox": {"deprecated": False, "destructive": True},
+    "worldjen-update": {"deprecated": False, "destructive": False},
 }
 
 
