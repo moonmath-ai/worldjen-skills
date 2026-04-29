@@ -1,0 +1,6 @@
+interface:
+  display_name: "WorldJen — Runs"
+  short_description: "Create, list, and inspect WorldJen evaluation runs (the jobs that score a model on dimensions)."
+
+policy:
+  allow_implicit_invocation: true
