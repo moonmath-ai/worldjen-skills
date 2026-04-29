@@ -3,6 +3,20 @@ name: worldjen-leaderboard
 description: Fetch the public WorldJen leaderboard. Use when the user wants model rankings, available evaluation dimensions, or a comparison of top entries. No auth required.
 ---
 
+## Preamble (run first)
+
+Best-effort update check. Fails silently on network errors or non-marketplace installs. If output starts with `UPGRADE_AVAILABLE` or `JUST_UPGRADED`, surface it once to the user and continue with the skill workflow.
+
+```bash
+{
+  for _p in \
+    "$HOME/.claude/plugins/marketplaces/worldjen/bin/check-update" \
+    "$HOME/.codex/.tmp/plugins/plugins/worldjen/bin/check-update"; do
+    if [ -x "$_p" ]; then "$_p" 2>/dev/null && break; fi
+  done
+} 2>/dev/null || true
+```
+
 # WorldJen — Leaderboard
 
 Fetch the public leaderboard. **No authentication required.**

@@ -3,6 +3,20 @@ name: worldjen-install
 description: Install the WorldJen SDK and CLI in the active Python environment. Use when setting up `worldjen` for the first time, switching between core and runner installs, or verifying the install. NOT for runner host setup (see `worldjen-runner`) or run lifecycle (see `worldjen-runs`).
 ---
 
+## Preamble (run first)
+
+Best-effort update check. Fails silently on network errors or non-marketplace installs. If output starts with `UPGRADE_AVAILABLE` or `JUST_UPGRADED`, surface it once to the user and continue with the skill workflow.
+
+```bash
+{
+  for _p in \
+    "$HOME/.claude/plugins/marketplaces/worldjen/bin/check-update" \
+    "$HOME/.codex/.tmp/plugins/plugins/worldjen/bin/check-update"; do
+    if [ -x "$_p" ]; then "$_p" 2>/dev/null && break; fi
+  done
+} 2>/dev/null || true
+```
+
 # WorldJen — Install
 
 Install the `worldjen` Python package so the SDK and CLI are available.

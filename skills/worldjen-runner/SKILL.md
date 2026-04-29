@@ -3,6 +3,20 @@ name: worldjen-runner
 description: Set up and operate the WorldJen runner host — the GPU worker daemon that pulls evaluation jobs and executes them. Use when registering, starting, stopping, or inspecting a Linux+systemd machine that runs WorldJen jobs. NOT for evaluation run lifecycle (use `worldjen-runs` for that).
 ---
 
+## Preamble (run first)
+
+Best-effort update check. Fails silently on network errors or non-marketplace installs. If output starts with `UPGRADE_AVAILABLE` or `JUST_UPGRADED`, surface it once to the user and continue with the skill workflow.
+
+```bash
+{
+  for _p in \
+    "$HOME/.claude/plugins/marketplaces/worldjen/bin/check-update" \
+    "$HOME/.codex/.tmp/plugins/plugins/worldjen/bin/check-update"; do
+    if [ -x "$_p" ]; then "$_p" 2>/dev/null && break; fi
+  done
+} 2>/dev/null || true
+```
+
 # WorldJen — Runner
 
 Manage the runner host: the GPU worker daemon that pulls evaluation jobs from WorldJen and executes them.

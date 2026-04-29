@@ -13,7 +13,12 @@ The format is based on Keep a Changelog and this package uses Semantic Versionin
 - `worldjen-runs` — evaluation run lifecycle (create, list, get, logs, videos, csv, download-videos)
 - `worldjen-leaderboard` — public leaderboard fetch (no auth)
 - `worldjen-sandbox` — Playground and Rank user-scoped sandbox runs (`worldjen playground get/reset --kind playground|rank`)
+- `worldjen-update` — auto-invocable skill that detects install method and runs the right upgrade command (`claude plugin update`, `codex plugin marketplace upgrade`, or `git pull && cp -R`)
+- `bin/check-update` — best-effort update-check script. 1h GitHub API cache, 7-day snooze, per-session deduplication, fails silently on network errors. Outputs gstack-style `UPGRADE_AVAILABLE` / `JUST_UPGRADED` protocol.
+- Per-skill preamble that runs `bin/check-update` (no-op when bin/ isn't present, e.g. direct cp installs).
 - `scripts/check-skills.sh` — frontmatter, manifest, and policy-parity validator
+- `.github/workflows/check.yml` — runs the validator on every push and pull request
+- `.github/workflows/release.yml` — on `v*.*.*` tag push, validates skills, verifies tag matches plugin manifest version, extracts CHANGELOG section, and creates a GitHub Release
 - README routing table and cross-platform invocation syntax matrix
 
 ### Changed

@@ -3,6 +3,20 @@ name: worldjen-runs
 description: Create, list, and inspect WorldJen evaluation runs — the jobs that score one model on one or more dimensions. Use when starting an eval run, checking run status, fetching logs, downloading videos, or canceling/deleting a run. NOT for runner host setup (use `worldjen-runner` for that).
 ---
 
+## Preamble (run first)
+
+Best-effort update check. Fails silently on network errors or non-marketplace installs. If output starts with `UPGRADE_AVAILABLE` or `JUST_UPGRADED`, surface it once to the user and continue with the skill workflow.
+
+```bash
+{
+  for _p in \
+    "$HOME/.claude/plugins/marketplaces/worldjen/bin/check-update" \
+    "$HOME/.codex/.tmp/plugins/plugins/worldjen/bin/check-update"; do
+    if [ -x "$_p" ]; then "$_p" 2>/dev/null && break; fi
+  done
+} 2>/dev/null || true
+```
+
 # WorldJen — Runs
 
 Create and manage **evaluation runs** — the jobs that score one model on one or more dimensions.

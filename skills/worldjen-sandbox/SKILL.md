@@ -3,6 +3,20 @@ name: worldjen-sandbox
 description: Operate the user-scoped WorldJen sandbox runs — Playground (custom-prompt) and Rank (rank-dimension). One sandbox of each per user. Use when the user wants ad-hoc evaluation without queueing a full run, or wants to reset their sandbox. Backed by `worldjen playground get/reset --kind playground|rank`.
 ---
 
+## Preamble (run first)
+
+Best-effort update check. Fails silently on network errors or non-marketplace installs. If output starts with `UPGRADE_AVAILABLE` or `JUST_UPGRADED`, surface it once to the user and continue with the skill workflow.
+
+```bash
+{
+  for _p in \
+    "$HOME/.claude/plugins/marketplaces/worldjen/bin/check-update" \
+    "$HOME/.codex/.tmp/plugins/plugins/worldjen/bin/check-update"; do
+    if [ -x "$_p" ]; then "$_p" 2>/dev/null && break; fi
+  done
+} 2>/dev/null || true
+```
+
 # WorldJen — Sandbox (Playground & Rank)
 
 The dashboard exposes two user-scoped sandbox runs: **Playground** (free-form custom prompt) and **Rank** (rank-dimension prompts). Both are operated by the same CLI subcommand, switched via `--kind`.

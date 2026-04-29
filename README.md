@@ -31,6 +31,7 @@ Per-capability agent skills for the [WorldJen](https://www.worldjen.com) video-e
 | Create and inspect evaluation runs                     | `worldjen-runs`        | Yes  |
 | Fetch the public leaderboard                           | `worldjen-leaderboard` | No   |
 | Use the Playground or Rank sandbox                     | `worldjen-sandbox`     | Yes  |
+| Upgrade this plugin to the latest release              | `worldjen-update`      | No   |
 
 `worldjen-runs` is for **evaluation jobs**. `worldjen-runner` is for the **GPU worker host**. They are different.
 
@@ -132,10 +133,24 @@ It avoids private repository paths, internal modules, and undocumented behavior.
 
 ## Development
 
-Validate skills locally before opening a PR:
+Validate skills locally:
 
 ```bash
 ./scripts/check-skills.sh
 ```
 
 Checks: plugin manifests parse, every skill has correct frontmatter and matching `agents/openai.yaml` policy, all relative markdown links resolve, destructive-ops skills include the required confirmation section.
+
+`.github/workflows/check.yml` runs the same validator on every push and pull request, so a broken skill fails CI before it can land.
+
+### Releasing
+
+Releases are cut by pushing a tag that matches the version in the plugin manifests:
+
+```bash
+# Bump VERSION in .claude-plugin/plugin.json + .codex-plugin/plugin.json + add CHANGELOG entry first
+git tag v0.3.0
+git push origin v0.3.0
+```
+
+`.github/workflows/release.yml` then validates the skills, confirms the tag matches both manifest versions, extracts the matching `CHANGELOG.md` section, and creates a GitHub Release. The `worldjen-update` skill (and the `bin/check-update` preamble in every other skill) reads from the GitHub Releases API, so a release tag is what triggers update notifications for installed users.
