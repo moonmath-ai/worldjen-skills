@@ -1,0 +1,53 @@
+name: release
+
+on:
+  push:
+    tags:
+      - "v*.*.*"
+
+permissions:
+  contents: write
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5  # v4.3.1
+        with:
+          fetch-depth: 0
+
+      - name: Validate skills
+        run: ./scripts/check-skills.sh
+
+      - name: Verify tag matches plugin manifest version
+        run: |
+          TAG="${GITHUB_REF#refs/tags/v}"
+          CLAUDE_V=$(python3 -c "import json; print(json.load(open('.claude-plugin/plugin.json'))['version'])")
+          CODEX_V=$(python3 -c "import json; print(json.load(open('.codex-plugin/plugin.json'))['version'])")
+          echo "Tag: $TAG  Claude: $CLAUDE_V  Codex: $CODEX_V"
+          if [ "$TAG" != "$CLAUDE_V" ] || [ "$TAG" != "$CODEX_V" ]; then
+            echo "ERROR: tag and plugin manifests disagree on version"
+            exit 1
+          fi
+
+      - name: Extract release notes from CHANGELOG
+        run: |
+          VERSION="${GITHUB_REF#refs/tags/v}"
+          awk -v v="$VERSION" '
+            /^## \[/ {
+              if (in_section) exit
+              if ($0 ~ "^## \\[" v "\\]") { in_section=1; next }
+            }
+            in_section { print }
+          ' CHANGELOG.md > release-notes.md
+          echo "--- release notes preview ---"
+          cat release-notes.md
+
+      - name: Create GitHub Release
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          gh release create "${GITHUB_REF_NAME}" \
+            --title "worldjen-skills ${GITHUB_REF_NAME}" \
+            --notes-file release-notes.md \
+            --verify-tag

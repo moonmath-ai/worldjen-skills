@@ -1,0 +1,6 @@
+interface:
+  display_name: "WorldJen — Leaderboard"
+  short_description: "Fetch the public WorldJen leaderboard JSON. No auth required."
+
+policy:
+  allow_implicit_invocation: true

@@ -1,0 +1,6 @@
+interface:
+  display_name: "WorldJen — Install"
+  short_description: "Install the WorldJen SDK and CLI in the active Python environment."
+
+policy:
+  allow_implicit_invocation: true

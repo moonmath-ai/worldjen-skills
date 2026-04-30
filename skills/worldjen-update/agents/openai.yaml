@@ -1,0 +1,6 @@
+interface:
+  display_name: "WorldJen — Update"
+  short_description: "Upgrade the worldjen-skills plugin to the latest GitHub release. Detects install method and runs the right upgrade command."
+
+policy:
+  allow_implicit_invocation: true

@@ -6,3 +6,7 @@ Thumbs.db
 
 *.pyc
 __pycache__/
+
+# gstack workflow markers / context
+.gstack/
+.context/

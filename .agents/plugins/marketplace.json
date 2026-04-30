@@ -1,14 +1,15 @@
 {
-  "name": "worldjen-local",
+  "name": "worldjen",
+  "description": "Agent skills for the WorldJen AI video and world model evaluation service.",
   "interface": {
-    "displayName": "WorldJen Local Plugins"
+    "displayName": "WorldJen"
   },
   "plugins": [
     {
       "name": "worldjen",
       "source": {
         "source": "local",
-        "path": "./plugins/worldjen"
+        "path": "../.."
       },
       "policy": {
         "installation": "AVAILABLE",

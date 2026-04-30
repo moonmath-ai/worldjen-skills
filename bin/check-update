@@ -1,0 +1,95 @@
+#!/usr/bin/env bash
+# bin/check-update — best-effort update check for worldjen-skills.
+#
+# Output protocol (one line on stdout, or nothing):
+#   UPGRADE_AVAILABLE <local-version> <latest-version>
+#   JUST_UPGRADED <prior-version> <current-version>
+#
+# Throttled to once per hour. Snoozed for 7 days after dismissal.
+# Per-session deduplication. Silent on network failure or any error.
+#
+# Reads local version from ../.claude-plugin/plugin.json (relative to this script).
+
+set -e
+
+CACHE_DIR="${HOME}/.cache/worldjen-skills"
+mkdir -p "$CACHE_DIR" 2>/dev/null || exit 0
+
+# Per-session dedup: only print the banner once per parent process
+SESSION_MARKER="$CACHE_DIR/session-${PPID:-0}"
+if [ -f "$SESSION_MARKER" ]; then
+  exit 0
+fi
+
+# One-shot just-upgraded notification (printed once, then cleared)
+JUST_UPGRADED_FILE="$CACHE_DIR/just-upgraded"
+if [ -f "$JUST_UPGRADED_FILE" ]; then
+  cat "$JUST_UPGRADED_FILE" 2>/dev/null
+  rm -f "$JUST_UPGRADED_FILE" 2>/dev/null
+  touch "$SESSION_MARKER" 2>/dev/null
+  exit 0
+fi
+
+# Snooze window (7 days)
+SNOOZE="$CACHE_DIR/snooze"
+if [ -f "$SNOOZE" ]; then
+  age=$(($(date +%s) - $(stat -f %m "$SNOOZE" 2>/dev/null || stat -c %Y "$SNOOZE" 2>/dev/null || echo 0)))
+  if [ "$age" -lt 604800 ]; then
+    touch "$SESSION_MARKER" 2>/dev/null
+    exit 0
+  fi
+fi
+
+# Resolve local version (relative to this script)
+SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]:-$0}")" && pwd)"
+PLUGIN_JSON="$SCRIPT_DIR/../.claude-plugin/plugin.json"
+if [ ! -f "$PLUGIN_JSON" ]; then
+  exit 0
+fi
+LOCAL=$(python3 -c "import json; print(json.load(open('$PLUGIN_JSON'))['version'])" 2>/dev/null)
+if [ -z "$LOCAL" ]; then
+  exit 0
+fi
+LOCAL_TAG="v$LOCAL"
+
+# Fetch latest with 1h cache
+LATEST_CACHE="$CACHE_DIR/latest"
+need_fetch=1
+if [ -f "$LATEST_CACHE" ]; then
+  age=$(($(date +%s) - $(stat -f %m "$LATEST_CACHE" 2>/dev/null || stat -c %Y "$LATEST_CACHE" 2>/dev/null || echo 0)))
+  if [ "$age" -lt 3600 ]; then
+    need_fetch=0
+  fi
+fi
+
+if [ "$need_fetch" -eq 1 ]; then
+  # 3-second timeout, exit silently on any network failure
+  fetched=$(curl -fsSL --max-time 3 "https://api.github.com/repos/moonmath-ai/worldjen-skills/releases/latest" 2>/dev/null \
+    | grep -o '"tag_name": *"[^"]*"' \
+    | head -1 \
+    | cut -d'"' -f4 || true)
+  if [ -n "$fetched" ]; then
+    echo "$fetched" > "$LATEST_CACHE"
+  fi
+fi
+
+LATEST=$(cat "$LATEST_CACHE" 2>/dev/null || true)
+
+# No latest version known (cache empty + network failed) → silent
+if [ -z "$LATEST" ]; then
+  touch "$SESSION_MARKER" 2>/dev/null
+  exit 0
+fi
+
+# Compare and emit
+touch "$SESSION_MARKER" 2>/dev/null
+if [ "$LATEST" != "$LOCAL_TAG" ] && [ "$LATEST" != "$LOCAL" ]; then
+  echo "UPGRADE_AVAILABLE $LOCAL_TAG $LATEST"
+fi
+
+# Background cleanup of stale session markers (older than 1 day)
+{
+  find "$CACHE_DIR" -maxdepth 1 -type f -name 'session-*' -mtime +1 -delete 2>/dev/null || true
+} &
+
+exit 0
