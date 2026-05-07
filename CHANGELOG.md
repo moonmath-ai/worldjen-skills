@@ -4,6 +4,12 @@ All notable changes to the WorldJen agent skill package should be documented in 
 
 The format is based on Keep a Changelog and this package uses Semantic Versioning.
 
+## Unreleased
+
+### Added
+
+- `worldjen-install` — Upgrade section that handles the runner case: stop the systemd service, `pip install -U`, `runner uninstall` + `runner install` to refresh the unit, then start. Plain `pip install -U` does not pick up on a running daemon.
+
 ## [0.2.0] - 2026-04-29
 
 ### Added
