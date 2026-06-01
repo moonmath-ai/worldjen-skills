@@ -16,12 +16,12 @@ import json, os, re, sys
 errors = []
 
 EXPECTED_SKILLS = {
-    "worldjen": {"deprecated": True, "destructive": False},
     "worldjen-install": {"deprecated": False, "destructive": False},
     "worldjen-runner": {"deprecated": False, "destructive": True},
-    "worldjen-runs": {"deprecated": False, "destructive": True},
+    "worldjen-bench": {"deprecated": False, "destructive": True},
+    "worldjen-score": {"deprecated": False, "destructive": True},
+    "worldjen-rank": {"deprecated": False, "destructive": True},
     "worldjen-leaderboard": {"deprecated": False, "destructive": False},
-    "worldjen-sandbox": {"deprecated": False, "destructive": True},
     "worldjen-update": {"deprecated": False, "destructive": False},
 }
 

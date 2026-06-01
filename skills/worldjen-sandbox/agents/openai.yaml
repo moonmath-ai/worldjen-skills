@@ -1,6 +1,0 @@
-interface:
-  display_name: "WorldJen — Sandbox"
-  short_description: "Operate the user-scoped Playground and Rank sandbox runs (worldjen playground get/reset --kind ...)."
-
-policy:
-  allow_implicit_invocation: true

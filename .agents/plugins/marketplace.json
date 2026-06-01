@@ -1,6 +1,6 @@
 {
   "name": "worldjen",
-  "description": "Agent skills for the WorldJen AI video and world model evaluation service.",
+  "description": "Agent skills for WorldJen — measurable quality scoring for generated media.",
   "interface": {
     "displayName": "WorldJen"
   },

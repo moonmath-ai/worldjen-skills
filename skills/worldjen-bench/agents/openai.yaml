@@ -1,0 +1,6 @@
+interface:
+  display_name: "WorldJen — Bench"
+  short_description: "Benchmark a whole model. Create, inspect, and compare WorldJen Bench runs (worldjen bench create / get / list)."
+
+policy:
+  allow_implicit_invocation: true

@@ -1,6 +1,6 @@
 ---
 name: worldjen-runner
-description: Set up and operate the WorldJen runner host — the GPU worker daemon that pulls evaluation jobs and executes them. Use when registering, starting, stopping, or inspecting a Linux+systemd machine that runs WorldJen jobs. NOT for evaluation run lifecycle (use `worldjen-runs` for that).
+description: Set up and operate the WorldJen runner host — the GPU worker daemon that pulls evaluation jobs and executes them. Use when registering, starting, stopping, or inspecting a Linux+systemd machine that runs WorldJen jobs. NOT for evaluation run lifecycle (use `worldjen-bench` for that).
 ---
 
 ## Preamble (run first)
@@ -21,7 +21,7 @@ Best-effort update check. Fails silently on network errors or non-marketplace in
 
 Manage the runner host: the GPU worker daemon that pulls evaluation jobs from WorldJen and executes them.
 
-This skill is for **machine setup**. For creating or inspecting evaluation runs (the jobs themselves), use the `worldjen-runs` skill.
+This skill is for **machine setup**. For creating or inspecting evaluation runs (the jobs themselves), use the `worldjen-bench` skill.
 
 ## Auth
 
@@ -77,8 +77,9 @@ These commands change persistent host state or stop running work. Confirm with t
 ## See also
 
 - `worldjen-install` — install `worldjen[runner]` and verify the CLI
-- `worldjen-runs` — create and inspect evaluation runs (the actual jobs)
+- `worldjen-bench` — create and inspect evaluation runs (the actual benchmark jobs)
+- `worldjen-score` — score the clip you just generated
+- `worldjen-rank` — quick personal preview vs the standard rank set
 - `worldjen-leaderboard` — public leaderboard
-- `worldjen-sandbox` — user-scoped sandbox runs (Playground and Rank)
 
 For examples and troubleshooting, see [references/examples.md](references/examples.md).

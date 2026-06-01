@@ -45,11 +45,11 @@ claude plugin list 2>/dev/null | grep -q "worldjen@worldjen" && echo "INSTALL=cl
 [ -d "$HOME/.codex/.tmp/plugins/plugins/worldjen" ] && echo "INSTALL=codex-plugin"
 
 # Direct skill copy (Codex)
-[ -d "$HOME/.codex/skills/worldjen-install" ] || [ -d "$HOME/.codex/skills/worldjen-runs" ] \
+[ -d "$HOME/.codex/skills/worldjen-install" ] || [ -d "$HOME/.codex/skills/worldjen-bench" ] \
   && echo "INSTALL=codex-direct"
 
 # Legacy direct skill copy
-[ -d "$HOME/.agents/skills/worldjen-install" ] || [ -d "$HOME/.agents/skills/worldjen-runs" ] \
+[ -d "$HOME/.agents/skills/worldjen-install" ] || [ -d "$HOME/.agents/skills/worldjen-bench" ] \
   && echo "INSTALL=agents-direct"
 ```
 
@@ -100,6 +100,7 @@ Snooze lasts 7 days from the touch timestamp. After that, the upgrade banner ret
 
 - `worldjen-install` — set up the SDK and CLI (separate from updating the skills package)
 - `worldjen-runner` — runner host operations
-- `worldjen-runs` — evaluation run lifecycle
+- `worldjen-bench` — benchmark a whole model
+- `worldjen-score` — score the clip you just generated
+- `worldjen-rank` — quick personal preview vs the standard rank set
 - `worldjen-leaderboard` — public leaderboard
-- `worldjen-sandbox` — Playground and Rank sandbox runs

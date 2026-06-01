@@ -4,11 +4,29 @@ All notable changes to the WorldJen agent skill package should be documented in 
 
 The format is based on Keep a Changelog and this package uses Semantic Versioning.
 
-## Unreleased
+## [0.3.0] - 2026-06-01
 
 ### Added
 
+- `worldjen-score` — "how good is this clip?" Single-clip per-dimension scoring against the user-scoped Score session. Backed by `worldjen score get/reset/upload` (and `worldjen.score.upload(...)`).
+- `worldjen-rank` — "which of these is best?" Comparative ranking of clips that share a prompt, with a server-enforced prompt lock. Backed by `worldjen rank get/upload/current/reset` (and `worldjen.rank.*`).
+- `worldjen-bench` — "how does the model perform overall?" Comprehensive benchmark across many prompts and dimensions on a worker queue. Backed by `worldjen bench create / list / get / cancel / delete / logs / csv / videos / download-videos` (and `worldjen.bench.create` / `run_with_pipeline`), with an explicit two-run-comparison workflow for drift / regression checks.
 - `worldjen-install` — Upgrade section that handles the runner case: stop the systemd service, `pip install -U`, `runner uninstall` + `runner install` to refresh the unit, then start. Plain `pip install -U` does not pick up on a running daemon.
+
+### Changed
+
+- README, examples, and plugin manifests rewritten around the **two modes** (score / bench) product story from worldjen.com.
+- `examples/codex-AGENTS.md` and `examples/generic-instructions.md` updated to route to the new score / rank / bench skills.
+
+### Removed
+
+- **BREAKING:** `worldjen-runs` removed — superseded by `worldjen-bench`, tracking the `worldjen runs *` → `worldjen bench *` CLI/SDK rename in worldjen SDK 0.6.0.
+- **BREAKING:** `worldjen-sandbox` removed — split into `worldjen-score` and `worldjen-rank`, tracking the removal of `worldjen playground` in favor of the `worldjen score` / `worldjen rank` surfaces in worldjen SDK 0.6.0.
+- **BREAKING:** the deprecated `worldjen` umbrella router (soft-deprecated in 0.2.0) removed. Use the per-capability skills directly.
+
+> **Requires worldjen SDK 0.6.0+.** These skills use the Score / Rank / Bench CLI and SDK surface. The pre-0.6.0 `worldjen playground`, `worldjen runs`, and `worldjen.run()` entrypoints are gone.
+
+Update `AGENTS.md` files, blog posts, and pinned scripts that reference `worldjen-runs`, `worldjen-sandbox`, or `/worldjen:worldjen`.
 
 ## [0.2.0] - 2026-04-29
 

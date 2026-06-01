@@ -1,6 +1,6 @@
 ---
 name: worldjen-install
-description: Install or upgrade the WorldJen SDK and CLI in the active Python environment. Use when setting up `worldjen` for the first time, switching between core and runner installs, verifying the install, or upgrading to the latest `worldjen` / `worldjen[runner]` release (auto-restarts the runner systemd service so it picks up the new version). NOT for runner host registration (see `worldjen-runner`), run lifecycle (see `worldjen-runs`), or upgrading the worldjen-skills plugin itself (see `worldjen-update`).
+description: Install or upgrade the WorldJen SDK and CLI in the active Python environment. Use when setting up `worldjen` for the first time, switching between core and runner installs, verifying the install, or upgrading to the latest `worldjen` / `worldjen[runner]` release (auto-restarts the runner systemd service so it picks up the new version). NOT for runner host registration (see `worldjen-runner`), benchmark run lifecycle (see `worldjen-bench`), or upgrading the worldjen-skills plugin itself (see `worldjen-update`).
 ---
 
 ## Preamble (run first)
@@ -107,8 +107,9 @@ Upgrade `worldjen` in the active environment to the latest release. If a runner 
 ## See also
 
 - `worldjen-runner` — set up and operate a runner host (Linux + systemd)
-- `worldjen-runs` — create and inspect evaluation runs
+- `worldjen-bench` — benchmark a whole model (create and inspect evaluation runs)
+- `worldjen-score` — score the clip you just generated
+- `worldjen-rank` — quick personal preview vs the standard rank set
 - `worldjen-leaderboard` — fetch the public leaderboard (no auth)
-- `worldjen-sandbox` — Playground and Rank user-scoped sandbox runs
 
 For examples and troubleshooting, see [references/examples.md](references/examples.md).

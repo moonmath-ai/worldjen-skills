@@ -43,6 +43,7 @@ The endpoint does not currently accept query filters. If the user wants to compa
 ## See also
 
 - `worldjen-install` — install the SDK and CLI for richer programmatic access
-- `worldjen-runs` — create your own evaluation runs
-- `worldjen-sandbox` — Rank/Playground sandbox for personal model evaluation
+- `worldjen-bench` — benchmark a whole model (every leaderboard row is a full Bench run)
+- `worldjen-score` — score the clip you just generated
+- `worldjen-rank` — quick personal preview vs the standard rank set
 - `worldjen-runner` — set up a GPU worker host
