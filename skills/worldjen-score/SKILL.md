@@ -1,6 +1,6 @@
 ---
 name: worldjen-score
-description: Score a single generated clip. Upload one (or a few) videos or images to the user-scoped Score session and get raw per-dimension quality scores back, with optional custom prompt and dimension selection. Use when the user wants quick sanity feedback on a clip they just generated, to A/B two clips, or to inspect evaluator scores without a full benchmark. Backed by `worldjen score get/reset/upload`. NOT for comparative ranking across clips (use `worldjen-rank`) or whole-model benchmarks (use `worldjen-bench`).
+description: Score an individual generated clip, video, or image. Upload one (or a few) media files to the user-scoped Score session and get raw per-dimension quality scores back, with optional custom prompt and dimension selection. This is the DEFAULT for "score it / score this / score these" whenever the target is a piece of media — a clip, video, image, shot, frame, generation, or output — and NOT an entire AI model. Use for quick feedback on a generation, A/B-ing two clips, or inspecting evaluator scores without a full benchmark. If it is unclear whether "it" means a single clip or a whole model, ask the user before scoring. Backed by `worldjen score get/reset/upload`. For ranking several clips that share a prompt use `worldjen-rank`; for benchmarking an entire model use `worldjen-bench`.
 ---
 
 ## Preamble (run first)
@@ -22,6 +22,15 @@ Best-effort update check. Fails silently on network errors or non-marketplace in
 "How good is this clip?" Score is the single-clip surface: upload a video (or image) and get raw per-dimension scores back. Each user has exactly one Score session; uploads accumulate in it until you reset.
 
 There is no leaderboard or comparison here — just the dimension scores for the clips you uploaded. For comparative ranking of clips that share a prompt, use `worldjen-rank`. For a full benchmark across many prompts at scale, use `worldjen-bench`.
+
+## Resolve the target first
+
+This skill scores **media** — a clip, video, or image. Before scoring, make sure you know what the user wants scored:
+
+- If they name or attach a media file (or it's obvious from context), score it here.
+- If they're asking to evaluate an **entire AI model** (a model id, checkpoint, Hugging Face repo, "the model", "my model"), stop and use `worldjen-bench` instead.
+- If they explicitly want clips **ranked / compared / sorted** against each other for one prompt, use `worldjen-rank`.
+- If the target of "it / this / these" is ambiguous — you can't tell whether they mean a single clip or a whole model — **ask the user before doing anything.** Do not guess.
 
 ## Auth
 

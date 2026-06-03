@@ -1,6 +1,6 @@
 interface:
   display_name: "WorldJen — Rank"
-  short_description: "Rank multiple clips that share a prompt into a leaderboard; session locks to the first prompt (worldjen rank upload)."
+  short_description: "Rank/compare several clips that share a prompt into a leaderboard. Only when rankings are explicitly asked for (worldjen rank upload)."
 
 policy:
   allow_implicit_invocation: true

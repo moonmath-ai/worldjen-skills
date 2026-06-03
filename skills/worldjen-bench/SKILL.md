@@ -1,6 +1,6 @@
 ---
 name: worldjen-bench
-description: Benchmark a whole model. Create, list, inspect, and compare WorldJen Bench runs — comprehensive scoring across many prompts and dimensions, executed on a worker queue. Use when starting a Bench run, tracking drift across model checkpoints, gating CI on benchmark scores, comparing two runs, fetching logs/CSV, downloading videos, or canceling/deleting a run. Backed by `worldjen bench create / list / get / cancel / delete / logs / csv / videos / download-videos`. NOT for runner host setup (use `worldjen-runner`), single-clip scoring (use `worldjen-score`), or prompt-locked ranking (use `worldjen-rank`).
+description: Benchmark or evaluate an entire AI model. Create, list, inspect, and compare WorldJen Bench runs — large-scale evaluation across many prompts and dimensions, executed on a GPU worker queue. Invoke ONLY when the target is a whole model — a model id, a checkpoint, a Hugging Face repo, "the model", "my model", comparing two models, tracking drift across model versions, or gating CI on a model's benchmark. To score an individual clip, video, or image, use `worldjen-score` instead, NOT this skill. Backed by `worldjen bench create / list / get / cancel / delete / logs / csv / videos / download-videos`. NOT for runner host setup (use `worldjen-runner`) or ranking clips that share a prompt (use `worldjen-rank`).
 ---
 
 ## Preamble (run first)

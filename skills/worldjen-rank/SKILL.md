@@ -1,6 +1,6 @@
 ---
 name: worldjen-rank
-description: Rank multiple clips that share a prompt into a leaderboard. Upload variants to the user-scoped Rank session and get them sorted; the session locks to the first prompt (server-enforced). Use when sweeping a hyperparameter, comparing model variants on one prompt, or collecting a leaderboard — without a full Bench run. Backed by `worldjen rank get/upload/current/reset`. NOT for single-clip scoring (use `worldjen-score`) or whole-model benchmarks (use `worldjen-bench`).
+description: Rank or compare several generated clips that share one prompt into a leaderboard. Upload candidate videos or images to the user-scoped Rank session and get them sorted best-to-worst; the session locks to the first prompt (server-enforced). Invoke ONLY when the user explicitly asks to rank, sort, compare, or pick the best among multiple clips, variants, or candidates for the same prompt. Backed by `worldjen rank get/upload/current/reset`. For raw scores on a single clip use `worldjen-score`; for benchmarking an entire AI model use `worldjen-bench`.
 ---
 
 ## Preamble (run first)

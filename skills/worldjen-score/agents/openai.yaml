@@ -1,6 +1,6 @@
 interface:
   display_name: "WorldJen — Score"
-  short_description: "Score a single generated clip. Raw per-dimension scores with optional custom prompt and dimensions (worldjen score upload)."
+  short_description: "Score an individual clip / video / image (NOT a whole model). Default for 'score it' on media; raw per-dimension scores (worldjen score upload)."
 
 policy:
   allow_implicit_invocation: true
