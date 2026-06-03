@@ -66,7 +66,7 @@ These commands change persistent host state or stop running work. Confirm with t
 - `worldjen runner install --name <NAME>` — installs a systemd unit and enables auto-start on boot. Persists service registration on the host.
 - `worldjen runner stop --name <NAME>` — stops accepting new work; in-flight jobs may fail
 - `worldjen runner uninstall --name <NAME>` — removes the systemd unit
-- `worldjen runner delete --name <NAME>` — deletes the runner from the account AND uninstalls the local service. Once deleted, in-flight runs on this runner will fail.
+- `worldjen runner delete --runner-id <RUNNER_ID>` — deletes the runner from the account AND uninstalls the local service. Once deleted, in-flight runs on this runner will fail. Omit `--runner-id` to use the id from this host's local config (selected via `--name`).
 
 ## Stop and ask when needed
 
