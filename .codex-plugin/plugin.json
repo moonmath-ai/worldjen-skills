@@ -1,7 +1,7 @@
 {
   "name": "worldjen",
-  "version": "0.2.0",
-  "description": "Agent skills for the WorldJen AI video and world model evaluation service: install, runner, runs, leaderboard, and sandbox (Playground + Rank).",
+  "version": "0.3.0",
+  "description": "Agent skills for WorldJen — measurable quality scoring for generated media: install, runner, score (single-clip per-dimension scores), rank (leaderboard across clips that share a prompt), bench (whole-model benchmark), and the public leaderboard.",
   "author": {
     "name": "MoonMath.ai",
     "url": "https://moonmath.ai"
@@ -15,7 +15,8 @@
     "video-generation",
     "sdk",
     "cli",
-    "playground",
+    "score",
+    "bench",
     "rank",
     "leaderboard"
   ],
@@ -23,7 +24,7 @@
   "interface": {
     "displayName": "WorldJen",
     "shortDescription": "Operate WorldJen from Codex",
-    "longDescription": "Drive the WorldJen AI video and world model evaluation service from Codex: install the SDK and CLI, set up and operate a runner host, create and inspect evaluation runs, fetch the public leaderboard, and use the Playground/Rank user-scoped sandbox.",
+    "longDescription": "Drive WorldJen from Codex — measurable quality scoring for generated media. Install the SDK and CLI, set up and operate a runner host, score a single generated clip for raw per-dimension numbers, rank clips that share a prompt into a leaderboard, benchmark a whole model across every dimension at scale, and fetch the public leaderboard.",
     "developerName": "MoonMath.ai",
     "category": "AI Evaluation",
     "capabilities": [
@@ -34,8 +35,9 @@
     "defaultPrompt": [
       "Show me the WorldJen leaderboard.",
       "Install the WorldJen CLI and verify it works.",
-      "Check the status of a WorldJen run.",
-      "Reset my WorldJen Playground sandbox."
+      "Score these 10 videos and tell me which one to ship and why.",
+      "Benchmark Lightricks/LTX-2 on all t2v dimensions with runner gpu-h100-01.",
+      "Compare run_8a3f to run_91bc — which dimensions regressed by 5pp or more?"
     ],
     "brandColor": "#8B5CF6",
     "logo": "./assets/worldjen-logo.svg"

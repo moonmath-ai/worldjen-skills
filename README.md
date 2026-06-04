@@ -1,6 +1,6 @@
 # WorldJen Agent Skills
 
-Agent skills for the [WorldJen](https://www.worldjen.com) AI video and world model evaluation service. Drop them into Claude Code, Codex, or any agent harness so your agent can install the SDK, operate runners, create eval runs, fetch the leaderboard, and use the Playground/Rank sandbox for you.
+Agent skills for [WorldJen](https://www.worldjen.com) — measurable quality scoring for generated media. Drop them into Claude Code, Codex, or any agent harness so your agent can install the SDK, operate runners, score the clip you just generated, benchmark a whole model, and fetch the public leaderboard for you.
 
 ## Quick start
 
@@ -28,12 +28,17 @@ Agent skills for the [WorldJen](https://www.worldjen.com) AI video and world mod
 | ------------------------------------------------------ | ---------------------- | ---- |
 | Install the SDK and CLI                                | `worldjen-install`     | No   |
 | Set up or operate a GPU runner host (Linux + systemd)  | `worldjen-runner`      | Yes  |
-| Create and inspect evaluation runs                     | `worldjen-runs`        | Yes  |
+| Score a single generated clip                          | `worldjen-score`       | Yes  |
+| Rank clips that share a prompt into a leaderboard      | `worldjen-rank`        | Yes  |
+| Benchmark a whole model (create / inspect / compare)   | `worldjen-bench`       | Yes  |
 | Fetch the public leaderboard                           | `worldjen-leaderboard` | No   |
-| Use the Playground or Rank sandbox                     | `worldjen-sandbox`     | Yes  |
 | Upgrade this plugin to the latest release              | `worldjen-update`      | No   |
 
-`worldjen-runs` is for **evaluation jobs**. `worldjen-runner` is for the **GPU worker host**. They are different.
+**Three surfaces.** `worldjen-score` answers "how good is this clip?" (raw per-dimension scores for one upload). `worldjen-rank` answers "which of these is best?" (a leaderboard across clips that share a prompt). `worldjen-bench` answers "how does the model perform overall?" (a full benchmark across many prompts, on a worker queue).
+
+`worldjen-bench` covers evaluation jobs. `worldjen-runner` covers the GPU worker host that executes them. They are different.
+
+> Requires worldjen SDK **0.6.0+** (Score / Rank / Bench CLI). `pip install -U worldjen` if you're on an older release.
 
 ## Invocation syntax
 
@@ -55,11 +60,17 @@ Install the WorldJen CLI in my active Python environment.
 
 Register this Linux machine as a runner with token <TOKEN>.
 
-Check WorldJen run <RUN_ID> and summarize its status.
+Score these 10 videos and tell me which one to ship and why.
 
-Reset my WorldJen Playground sandbox.
+/worldjen-score image.png for prompt_adherence against "neon city, cyberpunk"
 
-Get my WorldJen Rank sandbox as JSON.
+/worldjen-bench Lightricks/LTX-2, all t2v dimensions, runner gpu-h100-01
+
+Compare run_8a3f to run_91bc — which dimensions regressed by 5pp or more?
+
+Reset my WorldJen Score session.
+
+Get my WorldJen Rank session as JSON.
 ```
 
 ## Install paths
@@ -100,32 +111,31 @@ Then restart Codex. Each skill becomes available — `$worldjen-leaderboard ...`
 
 Point the agent at `skills/<skill-name>/SKILL.md`. Each skill is self-contained — no shared includes. See `examples/generic-instructions.md` for the bootstrap snippet.
 
-## Migration from 0.1.x
+## Migration to 0.3.0
 
-The single `worldjen` umbrella skill is **deprecated in 0.2.0** and will be removed in **0.3.0**. Existing references to `/worldjen:worldjen` continue to work — they now resolve to a router that points at the per-capability skills.
+The deprecated `worldjen` umbrella skill (soft-deprecated in 0.2.0) is **removed in 0.3.0**, along with `worldjen-runs` and `worldjen-sandbox`. Use the per-capability skills directly:
 
-| Old call                    | New call                                                   |
-| --------------------------- | ---------------------------------------------------------- |
-| Install with the umbrella   | `worldjen-install`                                         |
-| Runner setup with umbrella  | `worldjen-runner`                                          |
-| Run status with umbrella    | `worldjen-runs`                                            |
-| Leaderboard with umbrella   | `worldjen-leaderboard`                                     |
-| Sandbox usage with umbrella | `worldjen-sandbox`                                         |
+| Old call                            | New call                                                           |
+| ----------------------------------- | ------------------------------------------------------------------ |
+| `/worldjen:worldjen` (any umbrella) | the matching per-capability skill below                            |
+| `worldjen-runs`                     | `worldjen-bench`                                                   |
+| `worldjen-sandbox` (custom prompts) | `worldjen-score`                                                  |
+| `worldjen-sandbox` (standard set)   | `worldjen-rank`                                                   |
 
-Update `AGENTS.md` files, blog posts, and pinned scripts to reference the per-capability skill names before 0.3.0.
+Update `AGENTS.md` files, blog posts, and pinned scripts that reference `/worldjen:worldjen`, `worldjen-runs`, or `worldjen-sandbox`.
 
 ## Troubleshooting
 
 - `worldjen: command not found` — activate the environment where `worldjen` was installed. Verify with `python -m pip show worldjen`.
 - Auth failure — set `WORLDJEN_API_KEY` (or pass `--api-key`). Get a key at <https://www.worldjen.com/settings/api-keys>.
 - Runner service commands fail on macOS — runner service management requires Linux + systemd.
-- Missing IDs — list them: `worldjen runner list --json`, `worldjen models list`, `worldjen runs list --json`.
+- Missing IDs — list them: `worldjen runner list`, `worldjen models list`, `worldjen bench list --json`.
 
 ## What these skills do not do
 
 This repo stays on the public product surface:
 
-- Public CLI commands (`worldjen ...`) and SDK entrypoints (`worldjen.run(...)`)
+- Public CLI commands (`worldjen ...`) and SDK entrypoints (`worldjen.score.*`, `worldjen.rank.*`, `worldjen.bench.*`)
 - Public REST API (`/api/v1/*`)
 - Public leaderboard (`/api/v1/public/leaderboard`)
 

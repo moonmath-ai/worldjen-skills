@@ -1,6 +1,0 @@
-interface:
-  display_name: "WorldJen (deprecated umbrella)"
-  short_description: "Deprecated. Use worldjen-install / worldjen-runner / worldjen-runs / worldjen-leaderboard / worldjen-sandbox."
-
-policy:
-  allow_implicit_invocation: false

@@ -11,11 +11,6 @@
 **Priority:** P3 — `llms.txt`-driven discovery
 - Reference https://docs.worldjen.com/llms.txt as the canonical source agents fetch first; consider auto-generating skills from the worldjen CLI's `--help` output to eliminate skill drift.
 
-## Cleanup
-
-**Priority:** P2 — Remove deprecated `worldjen` umbrella router in 0.3.0
-- The router was added in 0.2.0 as a soft-deprecation alias for `/worldjen:worldjen`. Remove `skills/worldjen/` entirely once 0.3.0 ships and update CHANGELOG with the removal note.
-
 ## Validator improvements
 
 **Priority:** P3 — `scripts/check-skills.sh`: support YAML folded scalars
@@ -23,4 +18,4 @@
 
 ## Completed
 
-(none yet — populated by `/ship` as items land)
+- **0.3.0** — Removed the deprecated `worldjen` umbrella router (soft-deprecated in 0.2.0). All references migrated to the per-capability skills.
